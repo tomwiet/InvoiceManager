@@ -13,6 +13,7 @@ namespace InvoiceManager.Models.Domains
         }
 
         public int Id { get; set; }
+
         [Required]
         public string Name { get; set; }
         public int AddressId { get; set; }
@@ -27,6 +28,6 @@ namespace InvoiceManager.Models.Domains
 
         public Address Address { get; set; }
         public ICollection<Invoice> Invoices { get; set; }
-        public ApplicationUser Users { get; set; }
+        public ApplicationUser User { get; set; }
     }
 }
