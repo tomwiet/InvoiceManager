@@ -94,12 +94,20 @@
                         new { @class = "form-control"})
                     </div>
                 </div>
+                <button class="btn btn-primary btn-lg mb-5" 
+                        type="submit">
+                    Zapisz
+                </button>
 
             }
         }
     </div>
     <div class="col-5 offset-lg-1">
-
+        @if(Model.Invoice.Id !=0)
+         {
+            @Html.Partial("_InvoicePosition",Model.Invoice.InvoicePositions)
+            //dodac widok z nazwa jak wyzej
+         }
     </div>
 </div>
 
