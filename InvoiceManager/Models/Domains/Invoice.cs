@@ -21,6 +21,7 @@ namespace InvoiceManager.Models.Domains
         public int MethodOfPaymentId { get; set; }
         public DateTime PaymentDate { get; set; }
         public DateTime CreatedDate { get; set; }
+        public string Comments { get; set; }
         public int ClientId { get; set; }
 
         [Required]

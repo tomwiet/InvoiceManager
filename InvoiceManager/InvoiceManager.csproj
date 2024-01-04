@@ -171,6 +171,10 @@
     <Compile Include="Migrations\202401021236396_Init.designer.cs">
       <DependentUpon>202401021236396_Init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202401040927087_FiXInvoiceCommentsField.cs" />
+    <Compile Include="Migrations\202401040927087_FiXInvoiceCommentsField.designer.cs">
+      <DependentUpon>202401040927087_FiXInvoiceCommentsField.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Domains\Address.cs" />
     <Compile Include="Models\Domains\Client.cs" />
@@ -307,6 +311,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202401021236396_Init.resx">
       <DependentUpon>202401021236396_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401040927087_FiXInvoiceCommentsField.resx">
+      <DependentUpon>202401040927087_FiXInvoiceCommentsField.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
