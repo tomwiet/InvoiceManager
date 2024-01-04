@@ -16,18 +16,31 @@ namespace InvoiceManager.Models.Domains
         }
         public int Id { get; set; }
         [Required]
+        [Display(Name ="Nr faktury")]
         public string Title { get; set; }
+
+        [Display(Name = "Wartość")]
         public decimal Value { get; set; }
+
+        [Display(Name = "Metoda płatności")]
         public int MethodOfPaymentId { get; set; }
+
+        [Display(Name = "Termin zapłaty")]
         public DateTime PaymentDate { get; set; }
+
+        [Display(Name = "Data utworzenia")]
         public DateTime CreatedDate { get; set; }
+
+        [Display(Name = "Uwagi")]
         public string Comments { get; set; }
+
+        [Display(Name ="Nazwa klienta")]
         public int ClientId { get; set; }
 
         [Required]
         [ForeignKey("User")]
         public string UserId { get; set; }
-
+        
         public MethodOfPayment MethodOfPayment { get; set; }
         public Client Client { get; set; }
         public ApplicationUser User { get; set; }

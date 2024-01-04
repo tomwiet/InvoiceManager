@@ -1,4 +1,5 @@
 ﻿using InvoiceManager.Models.Domains;
+using InvoiceManager.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +38,96 @@ namespace InvoiceManager.Controllers
         }
         public ActionResult Invoice(int id=0) 
         {
-            return View();
+            EditInvoiceViewModel vm = new EditInvoiceViewModel();
+            if (id == 0)
+            {
+                vm = new EditInvoiceViewModel
+                {
+                    Clients = new List<Client>
+                    {
+                        new Client
+                        {
+                            Id = 1,
+                            Name = "Klient 1"
+                        }
+
+                    },
+
+                    MethodOfPayments = new List<MethodOfPayment>
+                    {
+                        new MethodOfPayment
+                        {
+                            Id = 1,
+                            Name ="Gotówka"
+                        } 
+                    },
+                
+                    Heading ="Edycja faktury",
+
+                     Invoice = new Invoice()
+                };
+
+            }
+            else
+            {
+                vm = new EditInvoiceViewModel
+                {
+                    Clients = new List<Client>
+                    {
+                        new Client
+                        {
+                            Id = 1,
+                            Name = "Klient 1"
+                        }
+
+                    },
+
+                    MethodOfPayments = new List<MethodOfPayment>
+                    {
+                        new MethodOfPayment
+                        {
+                            Id = 1,
+                            Name ="Gotówka"
+                        }
+                    },
+
+                    Heading = "Edycja faktury",
+
+                    Invoice = new Invoice
+                    {
+                        ClientId = 1,
+                        Comments ="dfdfdf",
+                        CreatedDate = DateTime.Now,
+                        PaymentDate = DateTime.Now,
+                        MethodOfPaymentId = 1,
+                        Id = 1,
+                        Value = 100,
+                        Title= "F/1/12024",
+                        InvoicePositions = new List<InvoicePosition>
+                        {
+                            new InvoicePosition
+                            {
+                                Id= 1,
+                                Product =new Product{Name="Produkt"},
+                                Quantity=2,
+                                Value=100,
+                                Lp=1
+                            },
+                            new InvoicePosition
+                            {
+                                Id= 2,
+                                Product =new Product{Name="Produkt2"},
+                                Quantity=3,
+                                Value=30,
+                                Lp=2
+                            }
+                        }
+                    }
+                };
+            }
+            
+                 
+            return View(vm);
         }
         [AllowAnonymous]
         public ActionResult About()

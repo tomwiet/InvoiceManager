@@ -29,77 +29,62 @@
                     Pola tytuł, klient, sposób płatności i termin są
                     <strong>wymagane</strong>
                 </p>
+            }
                 @Html.HiddenFor(x => x.Invoice.Id)
                 @Html.HiddenFor(x => x.Invoice.UserId)
                 @Html.HiddenFor(x => x.Invoice.CreatedDate)
 
                 <div class="row mb-3">
-                    <div class="col-lg-5">
+                        
                         @Html.LabelFor(x => x.Invoice.Title)
-                    </div>
-                    <div class="col-5 offset-lg-1">
                         @Html.TextBoxFor(x => x.Invoice.Title,
-                        new { @class = "form-control", autofocus = "autofocus" })
-                    </div>
+                        new { @class = "form-control mt-3", autofocus = "autofocus" })
+                    
                 </div>
                 <div class="row mb-3">
-                    <div class="col-lg-5">
+                    
                         @Html.LabelFor(x => x.Invoice.ClientId)
-                    </div>
-                    <div class="col-5 offset-lg-1">
                         @Html.DropDownListFor(x => x.Invoice.ClientId,
                         new SelectList(Model.Clients, "Id", "Name"),
                         "--Wybierz klienta--",
-                        new { @class = "form-control" })
-                    </div>
+                        new { @class = "form-control mt-3" })
                 </div>
                 if (Model.Invoice.Id != 0)
                 {
                     <div class="row mb-3">
-                        <div class="col-lg-5">
                             @Html.LabelFor(x => x.Invoice.Value)
-                        </div>
-                        <div class="col-5 offset-lg-1">
                             @Html.TextBoxFor(x => x.Invoice.Value,
-                            new { @class = "form-control", @readonly = "readonly" })
-                        </div>
+                            new { @class = "form-control mt-3", @readonly = "readonly" })
                     </div>
                 }
-                <div class="row mb-3">
-                    <div class="col-lg-5">
+                <div class="row mb-3 ">
                         @Html.LabelFor(x => x.Invoice.MethodOfPaymentId)
-                    </div>
-                    <div class="col-5 offset-lg-1">
                         @Html.DropDownListFor(x => x.Invoice.MethodOfPaymentId,
                         new SelectList(Model.MethodOfPayments, "Id", "Name"),
                         "--Wybierz sposób płatności--",
-                        new { @class = "form-control" })
-                    </div>
+                        new { @class = "form-control mt-3" })
                 </div>
-                <div class="row mb-3">
-                    <div class="col-lg-5">
+                <div class="row mb-3 ">
                         @Html.LabelFor(x => x.Invoice.PaymentDate)
-                    </div>
-                    <div class="col-5 offset-lg-1">
                         @Html.TextBoxFor(x => x.Invoice.PaymentDate, "{0:dd-MM-yyyy}",
-                        new { @class = "form-control" })
-                    </div>
+                        new { 
+                                @class = "form-control mt-3",
+                                @id="PaymentDate",
+                                autocomplete = "off"
+                        })
                 </div>
                 <div class="row mb-3">
-                    <div class="col-lg-5">
                         @Html.LabelFor(x => x.Invoice.Comments)
-                    </div>
-                    <div class="col-5 offset-lg-1">
+
                         @Html.TextAreaFor(x => x.Invoice.Comments,
-                        new { @class = "form-control"})
-                    </div>
+                        new { @class = "form-control mt-3" })
                 </div>
                 <button class="btn btn-primary btn-lg mb-5" 
                         type="submit">
                     Zapisz
                 </button>
 
-            }
+            
         }
     </div>
     <div class="col-5 offset-lg-1">
@@ -117,6 +102,16 @@
         function generatePdf() {
             
         }
+        $(document).ready(function () {
+            $('#PaymentDate').datepicker({
+                format: "dd/mm/yyyy",
+                language: "pl",
+                multidate: false,
+                autoclose: true,
+                todayHighlight: true,
+                forceParse: false
+            })
+        });
     </script>
 
 }
