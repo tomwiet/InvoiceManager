@@ -34,12 +34,10 @@
                 @Html.HiddenFor(x => x.Invoice.UserId)
                 @Html.HiddenFor(x => x.Invoice.CreatedDate)
 
-                <div class="row mb-3">
-                        
+                <div class="row mb-3"> 
                         @Html.LabelFor(x => x.Invoice.Title)
                         @Html.TextBoxFor(x => x.Invoice.Title,
                         new { @class = "form-control mt-3", autofocus = "autofocus" })
-                    
                 </div>
                 <div class="row mb-3">
                     
@@ -101,6 +99,10 @@
     <script type="text/javascript">
         function generatePdf() {
             
+        }
+        function deleteInvoicePosition() {
+            if (!confirm("Czy na pewno chcesz usunąc pozycję z faktury?"))
+                return;
         }
         $(document).ready(function () {
             $('#PaymentDate').datepicker({

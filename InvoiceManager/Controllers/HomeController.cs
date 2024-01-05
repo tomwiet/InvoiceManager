@@ -38,7 +38,7 @@ namespace InvoiceManager.Controllers
         }
         public ActionResult Invoice(int id=0) 
         {
-            EditInvoiceViewModel vm = new EditInvoiceViewModel();
+            EditInvoiceViewModel vm = null;
             if (id == 0)
             {
                 vm = new EditInvoiceViewModel
@@ -129,6 +129,45 @@ namespace InvoiceManager.Controllers
                  
             return View(vm);
         }
+        public ActionResult InvoicePosition(
+            int invoiceId,
+            int invoicePositionId=0) 
+        {
+            EditInvoicePositionViewModel vm = null;
+            if (invoicePositionId == 0) 
+            {
+                vm = new EditInvoicePositionViewModel
+                {
+                    InvoicePosition = new InvoicePosition(),
+                    Heading = "Dodawanie nowej pozycji",
+                    Products = new List<Product>
+                    {
+                        new Product
+                        {
+                            Id = 1,
+                            Name = "Produkt 1"
+                        }
+                    }
+                };
+            }
+            else
+            {
+                vm = new EditInvoicePositionViewModel
+                {
+                    InvoicePosition = new InvoicePosition
+                    {
+                        Lp=1,Value=123,Quantity=2,ProductId=1
+                    },
+                    Heading = "Dodawanie nowej pozycji",
+                    Products = new List<Product>
+                    {
+                        new Product {Id = 1,Name = "Produkt 1"}
+                    }
+                };
+            }
+            return View(vm); 
+        }
+
         [AllowAnonymous]
         public ActionResult About()
         {
