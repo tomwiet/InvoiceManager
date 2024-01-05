@@ -31,8 +31,6 @@
                 </p>
             }
                 @Html.HiddenFor(x => x.Invoice.Id)
-                @Html.HiddenFor(x => x.Invoice.UserId)
-                @Html.HiddenFor(x => x.Invoice.CreatedDate)
 
                 <div class="row mb-3"> 
                         @Html.LabelFor(x => x.Invoice.Title)
@@ -89,7 +87,7 @@
         @if(Model.Invoice.Id !=0)
          {
             @Html.Partial("_InvoicePosition",Model.Invoice.InvoicePositions)
-            //dodac widok z nazwa jak wyzej
+            
          }
     </div>
 </div>
