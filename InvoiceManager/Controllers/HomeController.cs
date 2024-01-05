@@ -1,5 +1,7 @@
 ﻿using InvoiceManager.Models.Domains;
+using InvoiceManager.Models.Repositories;
 using InvoiceManager.Models.ViewModels;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,124 +13,50 @@ namespace InvoiceManager.Controllers
     [Authorize]
     public class HomeController : Controller
     {
+        private InvoiceRepository _invoiceRepository = new InvoiceRepository();
         public ActionResult Index()
         {
-            var invoice = new List<Invoice>
-            {
-                new Invoice
-                {
-                    Id = 1,
-                    Title ="F/1/2024",
-                    CreatedDate = DateTime.Now,
-                    PaymentDate = DateTime.Now,
-                    Value = 999,
-                    Client = new Client{Name="Klient 1"}
-                },
-                new Invoice
-                {
-                    Id = 2,
-                    Title ="F/2/2024",
-                    CreatedDate = DateTime.Now,
-                    PaymentDate = DateTime.Now,
-                    Value = 666,
-                    Client = new Client{Name="Klient 2"}
-                }
-            };
-            return View(invoice);
+            var userId = User.Identity.GetUserId();
+
+            var invoices = _invoiceRepository.GetInvoices(userId);
+
+            return View(invoices);
         }
         public ActionResult Invoice(int id=0) 
         {
-            EditInvoiceViewModel vm = null;
-            if (id == 0)
-            {
-                vm = new EditInvoiceViewModel
-                {
-                    Clients = new List<Client>
-                    {
-                        new Client
-                        {
-                            Id = 1,
-                            Name = "Klient 1"
-                        }
-
-                    },
-
-                    MethodOfPayments = new List<MethodOfPayment>
-                    {
-                        new MethodOfPayment
-                        {
-                            Id = 1,
-                            Name ="Gotówka"
-                        } 
-                    },
-                
-                    Heading ="Edycja faktury",
-
-                     Invoice = new Invoice()
-                };
-
-            }
-            else
-            {
-                vm = new EditInvoiceViewModel
-                {
-                    Clients = new List<Client>
-                    {
-                        new Client
-                        {
-                            Id = 1,
-                            Name = "Klient 1"
-                        }
-
-                    },
-
-                    MethodOfPayments = new List<MethodOfPayment>
-                    {
-                        new MethodOfPayment
-                        {
-                            Id = 1,
-                            Name ="Gotówka"
-                        }
-                    },
-
-                    Heading = "Edycja faktury",
-
-                    Invoice = new Invoice
-                    {
-                        ClientId = 1,
-                        Comments ="dfdfdf",
-                        CreatedDate = DateTime.Now,
-                        PaymentDate = DateTime.Now,
-                        MethodOfPaymentId = 1,
-                        Id = 1,
-                        Value = 100,
-                        Title= "F/1/12024",
-                        InvoicePositions = new List<InvoicePosition>
-                        {
-                            new InvoicePosition
-                            {
-                                Id= 1,
-                                Product =new Product{Name="Produkt"},
-                                Quantity=2,
-                                Value=100,
-                                Lp=1
-                            },
-                            new InvoicePosition
-                            {
-                                Id= 2,
-                                Product =new Product{Name="Produkt2"},
-                                Quantity=3,
-                                Value=30,
-                                Lp=2
-                            }
-                        }
-                    }
-                };
-            }
-            
-                 
+            var userId = User.Identity.GetUserId();
+            var invoice = (id==0) ?
+                GetNewInvoice(userId) :
+                _invoiceRepository.GetInvoice(id,userId);
+            var vm = PrepareInvoiceVm(invoice, userId);
             return View(vm);
         }
+
+        private EditInvoiceViewModel PrepareInvoiceVm(Invoice invoice, 
+            string userId)
+        {
+            return new EditInvoiceViewModel
+            {
+                Invoice = invoice,
+                Heading = invoice.Id == 0 ? "Dodawanie nowej faktury": "Faktura",
+                Clients = _clientRepository.GetClients(userId),
+                MethodOfPayments = _invoiceRepository.GetMethodsOfPayment()
+
+
+            }
+        }
+
+        private Invoice GetNewInvoice(string userId)
+        {
+            return new Invoice
+            {
+                UserId = userId,
+                CreatedDate = DateTime.Now,
+                PaymentDate = DateTime.Now.AddDays(7)
+
+            };
+        }
+
         public ActionResult InvoicePosition(
             int invoiceId,
             int invoicePositionId=0) 
