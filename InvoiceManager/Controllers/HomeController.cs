@@ -143,7 +143,13 @@ namespace InvoiceManager.Controllers
  
             return Json(new { Success = true });
         }
+        
         [HttpPost]
+
+        public ActionResult Test()
+        {
+            return Json(new { Success = true });
+        }
         public ActionResult DeletePosition(int id, int invoiceId)
         {
             var invoiceValue = 0m;
@@ -154,8 +160,6 @@ namespace InvoiceManager.Controllers
 
                 invoiceValue = _invoiceRepository.UpdateInvoiceValue(invoiceId, userId);
 
-
-
             }
             catch (Exception exeption)
             {
@@ -164,6 +168,7 @@ namespace InvoiceManager.Controllers
             }
 
             return Json(new { Success = true, InvoiceValue = invoiceValue });
+            
         }
 
         [AllowAnonymous]

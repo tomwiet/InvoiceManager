@@ -96,12 +96,47 @@
 {
     <script type="text/javascript">
         function generatePdf() {
-            
+
         }
-        function deleteInvoicePosition() {
+        
+        function deleteInvoicePosition(id,invoiceId,btn) {
             if (!confirm("Czy na pewno chcesz usunąc pozycję z faktury?"))
                 return;
+            console.log(id);
+            console.log(invoiceId);
+            console.log(btn);
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeletePosition", "Home")',
+                data: {
+                    id: id,
+                    invoiceId: invoiceId
+                },
+                success: function(data) {
+
+                    if (data.Success) {
+
+                        var row = btn.parentNode.parentNode;
+                        row.parentNode.removeChild(row);
+                       
+
+                        $('#Invoice_Value')
+                            .val(data.InvoiceValue
+                                .toFixed(2)
+                                .replace(".", ","));
+                    } else {
+                       alert(data.Message)
+                    }
+                },
+                error: function() {
+
+                     alert(data.Message)
+                },
+                dataType: 'json'
+            });
         }
+
         $(document).ready(function () {
             $('#PaymentDate').datepicker({
                 format: "dd/mm/yyyy",
