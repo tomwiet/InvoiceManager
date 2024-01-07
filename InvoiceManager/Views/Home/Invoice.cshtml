@@ -23,6 +23,8 @@
     <div class="col-lg-6">
         @using (Html.BeginForm("Invoice", "Home"))
         {
+            @Html.ValidationSummary();
+
             if (Model.Invoice.Id == 0)
             {
                 <p class="alert alert-info mt-4 mb-4">
@@ -30,65 +32,72 @@
                     <strong>wymagane</strong>
                 </p>
             }
-                @Html.HiddenFor(x => x.Invoice.Id)
+            @Html.HiddenFor(x => x.Invoice.Id)
+            @Html.HiddenFor(x => x.Invoice.UserId)
 
-                <div class="row mb-3"> 
-                        @Html.LabelFor(x => x.Invoice.Title)
-                        @Html.TextBoxFor(x => x.Invoice.Title,
-                        new { @class = "form-control mt-3", autofocus = "autofocus" })
-                </div>
+            <div class="row mb-3">
+                @Html.LabelFor(x => x.Invoice.Title)
+                @Html.TextBoxFor(x => x.Invoice.Title,
+                new { @class = "form-control mt-3", autofocus = "autofocus" })
+                @Html.ValidationMessageFor(x => x.Invoice.Title)
+            </div>
+            <div class="row mb-3">
+
+                @Html.LabelFor(x => x.Invoice.ClientId)
+                @Html.DropDownListFor(x => x.Invoice.ClientId,
+                new SelectList(Model.Clients, "Id", "Name"),
+                "--Wybierz klienta--",
+                new { @class = "form-control mt-3" })
+                @Html.ValidationMessageFor(x => x.Invoice.ClientId)
+            </div>
+            if (Model.Invoice.Id != 0)
+            {
                 <div class="row mb-3">
-                    
-                        @Html.LabelFor(x => x.Invoice.ClientId)
-                        @Html.DropDownListFor(x => x.Invoice.ClientId,
-                        new SelectList(Model.Clients, "Id", "Name"),
-                        "--Wybierz klienta--",
-                        new { @class = "form-control mt-3" })
+                    @Html.LabelFor(x => x.Invoice.Value)
+                    @Html.TextBoxFor(x => x.Invoice.Value,
+                    new { @class = "form-control mt-3", @readonly = "readonly" })
                 </div>
-                if (Model.Invoice.Id != 0)
-                {
-                    <div class="row mb-3">
-                            @Html.LabelFor(x => x.Invoice.Value)
-                            @Html.TextBoxFor(x => x.Invoice.Value,
-                            new { @class = "form-control mt-3", @readonly = "readonly" })
-                    </div>
-                }
-                <div class="row mb-3 ">
-                        @Html.LabelFor(x => x.Invoice.MethodOfPaymentId)
-                        @Html.DropDownListFor(x => x.Invoice.MethodOfPaymentId,
-                        new SelectList(Model.MethodOfPayments, "Id", "Name"),
-                        "--Wybierz sposób płatności--",
-                        new { @class = "form-control mt-3" })
-                </div>
-                <div class="row mb-3 ">
-                        @Html.LabelFor(x => x.Invoice.PaymentDate)
-                        @Html.TextBoxFor(x => x.Invoice.PaymentDate, "{0:dd-MM-yyyy}",
-                        new { 
-                                @class = "form-control mt-3",
-                                @id="PaymentDate",
-                                autocomplete = "off"
-                        })
-                </div>
-                <div class="row mb-3">
-                        @Html.LabelFor(x => x.Invoice.Comments)
+            }
+            <div class="row mb-3 ">
+                @Html.LabelFor(x => x.Invoice.MethodOfPaymentId)
+                @Html.DropDownListFor(x => x.Invoice.MethodOfPaymentId,
+                new SelectList(Model.MethodOfPayments, "Id", "Name"),
+                "--Wybierz sposób płatności--",
+                new { @class = "form-control mt-3" })
+                @Html.ValidationMessageFor(x => x.Invoice.MethodOfPaymentId)
+            </div>
+            <div class="row mb-3 ">
+                @Html.LabelFor(x => x.Invoice.PaymentDate)
+                @Html.TextBoxFor(x => x.Invoice.PaymentDate, "{0:dd-MM-yyyy}",
+                new
+                     {
+                        @class = "form-control mt-3",
+                        @id = "PaymentDate",
+                        autocomplete = "off"
+                })
+                @Html.ValidationMessageFor(x => x.Invoice.PaymentDate)
+            </div>
+            <div class="row mb-3">
+                @Html.LabelFor(x => x.Invoice.Comments)
 
-                        @Html.TextAreaFor(x => x.Invoice.Comments,
-                        new { @class = "form-control mt-3" })
-                </div>
-                <button class="btn btn-primary btn-lg mb-5" 
-                        type="submit">
-                    Zapisz
-                </button>
+                @Html.TextAreaFor(x => x.Invoice.Comments,
+                new { @class = "form-control mt-3" })
+                @Html.ValidationMessageFor(x => x.Invoice.Comments)
+            </div>
+            <button class="btn btn-primary btn-lg mb-5"
+                    type="submit">
+                Zapisz
+            </button>
 
-            
+
         }
     </div>
     <div class="col-5 offset-lg-1">
-        @if(Model.Invoice.Id !=0)
-         {
-            @Html.Partial("_InvoicePosition",Model.Invoice.InvoicePositions)
-            
-         }
+        @if (Model.Invoice.Id != 0)
+        {
+            @Html.Partial("_InvoicePosition", Model.Invoice.InvoicePositions)
+
+        }
     </div>
 </div>
 
@@ -98,7 +107,7 @@
         function generatePdf() {
 
         }
-        
+
         function deleteInvoicePosition(id,invoiceId,btn) {
             if (!confirm("Czy na pewno chcesz usunąc pozycję z faktury?"))
                 return;
@@ -119,7 +128,7 @@
 
                         var row = btn.parentNode.parentNode;
                         row.parentNode.removeChild(row);
-                       
+
 
                         $('#Invoice_Value')
                             .val(data.InvoiceValue
@@ -146,6 +155,21 @@
                 todayHighlight: true,
                 forceParse: false
             })
+        });
+
+        $(document).ready(function () {
+            $.validator.methods.number = function (value, element) {
+                return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$.test(value);
+            }
+            $.validator.methods.date = function (value, element) {
+                var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+                if (isChrome) {
+                    var d = new Date();
+                    return this.optional(element) || !/Invalid|NaN/.test(new Date(d.toLocaleDateString(value)))
+                } else {
+                    return this.optional(element) || !/Invalid|NaN/.test(new Date(value))
+                }
+            }
         });
     </script>
 

@@ -27,10 +27,10 @@
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
-        </div>   
+        </div>
     </nav>
 
-    
+
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -40,6 +40,7 @@
     </div>
 
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
