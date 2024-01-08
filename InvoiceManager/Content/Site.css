@@ -21,3 +21,17 @@ textarea {
 .field-validation-error{
     color: #ff3333;
 }
+.privacyPoliceInfo{
+    font-size: 12px;
+    position: fixed;
+    bottom: 0;
+    background-color: #464646;
+    color: lightgrey;
+    text-align: center;
+    padding: 5px 0;
+    width: 100%
+
+}
+.privacyPoliceBtn{
+    font-size:13px;
+}
