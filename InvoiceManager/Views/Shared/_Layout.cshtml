@@ -43,5 +43,13 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    <div class="privacyPoliceInfo">
+        Serwis wykorzystuje pliki cookies. Korzystając ze strony wyrazasz zgodę na wykorzystanie plików cookies
+        <button onclick="ClosePrivacyPolice" 
+                type="button"
+                class="btn btn-light">
+        Ok, rozumiem</button>
+    </div>
 </body>
 </html>
