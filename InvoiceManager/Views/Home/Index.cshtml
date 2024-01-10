@@ -39,9 +39,14 @@
                         <td>@invoice.CreatedDate.ToString("dd-MM-yyyy")</td>
                         <td>@invoice.PaymentDate.ToString("dd-MM-yyyy")</td>
                         <td>
-                            <button class="btn btn-danger btn-sm" 
+                            <button class="btn btn-danger btn-sm"
                                     onclick="deleteInvoice('@invoice.Id',this)">
                                 Usuń
+                            </button>
+                            <button class="btn btn-outline-dark btn-sm"
+                                    onclick='window.location.href="@Url.Action("PrintInvoiceTemplate", "Print",
+                                      new {invoiceId = invoice.Id})"'>
+                                Drukuj
                             </button>
                         </td>
                     </tr>
