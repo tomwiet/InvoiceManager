@@ -15,6 +15,12 @@ namespace InvoiceManager.Controllers
     {
         private InvoiceRepository _invoiceRepository = new InvoiceRepository();
         
+        public ActionResult PrintInvoiceTemplate(int invoiceId)
+        {
+            var userId = User.Identity.GetUserId();
+            var invoice = _invoiceRepository.GetInvoice(invoiceId, userId);
+            return View(invoice);
+        }
         public ActionResult InvoiceToPdf(int id)
         {
             var handle = Guid.NewGuid().ToString();
@@ -38,6 +44,7 @@ namespace InvoiceManager.Controllers
                 PageSize = Size.A4,
                 PageOrientation = Orientation.Portrait
             };
+           
             return pdfResult.BuildFile(ControllerContext);
         }
 

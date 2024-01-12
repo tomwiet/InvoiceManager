@@ -1,4 +1,5 @@
-﻿@page {
+﻿
+@page {
     size: auto;
     margin-top: 50px;
     margin-bottom: 20px;
@@ -56,4 +57,11 @@ tr, td, th, thead, thead tr, thead tr th, tfoot{
 
 th {
     font-weight: normal;
+}
+
+@media print {
+
+    .nonprintable {
+        display: none !important;
+    }
 }
