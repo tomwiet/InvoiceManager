@@ -165,6 +165,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PrintController.cs" />
@@ -186,9 +187,11 @@
     <Compile Include="Models\Domains\InvoicePosition.cs" />
     <Compile Include="Models\Domains\MethodOfPayment.cs" />
     <Compile Include="Models\Domains\Product.cs" />
+    <Compile Include="Models\Repositories\AddressRepository.cs" />
     <Compile Include="Models\Repositories\ClientRepository.cs" />
     <Compile Include="Models\Repositories\InvoiceRepository.cs" />
     <Compile Include="Models\Repositories\ProductRepository.cs" />
+    <Compile Include="Models\ViewModels\AddEditClientViewModel.cs" />
     <Compile Include="Models\ViewModels\AddPhoneNumberViewModel.cs" />
     <Compile Include="Models\Domains\ApplicationUser.cs" />
     <Compile Include="Models\ViewModels\ChangePasswordViewModel.cs" />
@@ -394,6 +397,7 @@
     <Content Include="Views\Home\_InvoicePosition.cshtml" />
     <Content Include="Views\Home\InvoicePosition.cshtml" />
     <Content Include="Views\Print\InvoiceTemplate.cshtml" />
+    <Content Include="Views\Client\AddEditClient.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
