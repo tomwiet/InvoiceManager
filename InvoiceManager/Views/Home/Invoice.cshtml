@@ -17,6 +17,10 @@
             onclick="generatePdf()">
         Generuj PDF
     </button>
+    <button class="btn btn-secondary mb-3"
+            onclick="printInvoice()">
+        Drukuj
+    </button>
 }
 
 <div class="row">
@@ -42,30 +46,29 @@
                 new { @class = "form-control mt-3", autofocus = "autofocus" })
                 @Html.ValidationMessageFor(x => x.Invoice.Title)
             </div>
-            <div class="row mb-3">
-
+            <div class="row">
                 @Html.LabelFor(x => x.Invoice.ClientId)
-                <div class="row">
-                    <span>
+                <div class="row mb-3">
+                    <div class="col-lg-10">
                         @Html.DropDownListFor(x => x.Invoice.ClientId,
-                                                 new SelectList(Model.Clients, "Id", "Name"),
-                                                 "--Wybierz klienta--",
-                                                 new { @class = "form-control mt-3" })
+                        new SelectList(Model.Clients, "Id", "Name"),
+                        "--Wybierz klienta--",
+                        new { @class = "form-control mt-3" })
+                    </div>
+                    <div class="col-lg-1 mt-3">
+                        <button class="btn btn-sm btn-outline-dark"
+                                onclick='window.location.href =
+                                    "@Url.Action("AddEditClient", "Client")"'
+                                type="button">
+                        +
+                        </button>
 
-                    </span>
-                        
+                    </div>
                     
-                    <span>
-                        @Html.ActionLink("+", "AddClient", "Home")
-                    </span>
-
-                </div>
-                
-                
-                
-                
-
+                    
+                </div>    
                 @Html.ValidationMessageFor(x => x.Invoice.ClientId)
+                
             </div>
             if (Model.Invoice.Id != 0)
             {

@@ -1,0 +1,44 @@
+﻿@model InvoiceManager.Models.ViewModels.AddEditClientViewModel
+@{
+    ViewBag.Title = Model.Heading;
+}
+
+<h1 class="mb-3">@Model.Heading</h1>
+<div class="row">
+    <div class="col">
+        @using (Html.BeginForm("AddEditClient", "Home"))
+        {
+            @Html.AntiForgeryToken();
+            @Html.ValidationSummary();
+
+            if (Model.Client.Id == 0)
+            {
+                <p class="alert alert-info mt-4 mb-4">
+                    Pola nazwa, Adres, email są
+                    <strong>wymagane</strong>
+                </p>
+            }
+            <div class="row mb-3">
+                @Html.LabelFor(x => x.Client.Name)
+                @Html.TextBoxFor(x => x.Client.Name,
+                new { @class = "form-control mt-3", autofocus = "autofocus" })
+                @Html.ValidationMessageFor(x => x.Client.Name)
+            </div>
+            <div class="row mb-3">
+
+                @Html.LabelFor(x => x.Client.AddressId)
+                @Html.DropDownListFor(x => x.Client.AddressId,
+                new SelectList(Model.Addresses, "Id","City" + "Street"),
+                "--Wybierz adrest--",
+                new { @class = "form-control mt-3" })
+                @Html.ValidationMessageFor(x => x.Client.AddressId)
+            </div>
+            <button class="btn btn-primary btn-lg mb-5"
+                    type="submit">
+                Zapisz
+            </button>
+
+        }
+    </div>
+</div>
+

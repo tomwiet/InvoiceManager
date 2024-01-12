@@ -15,5 +15,16 @@ namespace InvoiceManager.Models.Repositories
                 return context.Clients.Where(x=>x.UserId == userId).ToList();
             }
         }
+
+        public Client GetClient(int id,string userId)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                return context.Clients.First(x=>
+                                          x.Id == id && 
+                                          x.UserId == userId);
+            }
+        }
+
     }
 }
