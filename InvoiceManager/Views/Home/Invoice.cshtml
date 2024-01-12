@@ -49,10 +49,26 @@
             <div class="row mb-3">
 
                 @Html.LabelFor(x => x.Invoice.ClientId)
-                @Html.DropDownListFor(x => x.Invoice.ClientId,
-                new SelectList(Model.Clients, "Id", "Name"),
-                "--Wybierz klienta--",
-                new { @class = "form-control mt-3" })
+                <div class="row">
+                    <span>
+                        @Html.DropDownListFor(x => x.Invoice.ClientId,
+                                                 new SelectList(Model.Clients, "Id", "Name"),
+                                                 "--Wybierz klienta--",
+                                                 new { @class = "form-control mt-3" })
+
+                    </span>
+                        
+                    
+                    <span>
+                        @Html.ActionLink("+", "AddClient", "Home")
+                    </span>
+
+                </div>
+                
+                
+                
+                
+
                 @Html.ValidationMessageFor(x => x.Invoice.ClientId)
             </div>
             if (Model.Invoice.Id != 0)

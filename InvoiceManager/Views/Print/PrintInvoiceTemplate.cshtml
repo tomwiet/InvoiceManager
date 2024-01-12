@@ -1,0 +1,32 @@
+﻿@using System.Web.UI.HtmlControls;
+@{
+    ViewBag.Title = "Drukowanie faktury";
+}
+@section additionalcss{
+    <link href="@Url.Content("~/Content/PrintInvoice.css")" rel="stylesheet" type="text/css" />
+}
+<div class="row nonprintable">
+    <div class="col-lg-1 offset-9">
+
+    </div>
+    <div class="col-lg-1">
+        <button class="btn btn-outline-dark btn-sm"
+        onclick='window.location.href="@Url.Action("Index", "Home")"'>
+            Anuluj
+        </button>
+    </div>
+    <div class="col-lg-1">
+        <button onclick="printInvoice()" class="btn btn-sm btn-primary">Drukuj</button>
+    </div>
+
+</div>
+
+@Html.Partial("InvoiceTemplate")
+
+@section Scripts{
+    <script type="text/javascript">
+        function printInvoice() {
+            window.print();
+        }
+    </script>
+}
