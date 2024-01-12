@@ -21,7 +21,7 @@ namespace InvoiceManager.Controllers
         {
             return View();
         }
-        public ActionResult AddEditClient(int id = 0)
+        public ActionResult EditClient(int id = 0)
         {
             var userId = User.Identity.GetUserId();
             var client = id == 0 ?
@@ -32,17 +32,15 @@ namespace InvoiceManager.Controllers
             return View(vm);
         }
 
-        private AddEditClientViewModel PrepareClientVm(Client client)
+        private EditClientViewModel PrepareClientVm(Client client)
         {
-            return new AddEditClientViewModel
+            return new EditClientViewModel
             {
                 Client = client,
-                Address = client.Address,
                 Heading = client.Id == 0 ?
                 "Dodawanie nowego klienta" :
                 "Edycja danych klienta",
-                Addresses = _addressRepository.GetAdresses()
-              
+                AddressList = _addressRepository.GetAdressesVm()
 
             };
         }

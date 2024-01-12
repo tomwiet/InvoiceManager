@@ -6,12 +6,11 @@ using System.Web;
 
 namespace InvoiceManager.Models.ViewModels
 {
-    public class AddEditClientViewModel
+    public class EditClientViewModel
     {
         public Client Client { get; set; }
-        public Address Address { get; set;}
         public string Heading { get; set; }
+        public List<AddressViewModel> AddressList { get; set; }
 
-        public List<Address> Addresses { get; set; }
     }
 }

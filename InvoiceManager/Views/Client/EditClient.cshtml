@@ -1,4 +1,4 @@
-﻿@model InvoiceManager.Models.ViewModels.AddEditClientViewModel
+﻿@model InvoiceManager.Models.ViewModels.EditClientViewModel
 @{
     ViewBag.Title = Model.Heading;
 }
@@ -18,6 +18,7 @@
                     <strong>wymagane</strong>
                 </p>
             }
+            @Html.HiddenFor(x => x.Client.UserId)
             <div class="row mb-3">
                 @Html.LabelFor(x => x.Client.Name)
                 @Html.TextBoxFor(x => x.Client.Name,
@@ -28,10 +29,16 @@
 
                 @Html.LabelFor(x => x.Client.AddressId)
                 @Html.DropDownListFor(x => x.Client.AddressId,
-                new SelectList(Model.Addresses, "Id","City" + "Street"),
+                new SelectList(Model.AddressList, "Address.Id", "ConcatAddressesRow"),
                 "--Wybierz adrest--",
                 new { @class = "form-control mt-3" })
                 @Html.ValidationMessageFor(x => x.Client.AddressId)
+            </div>
+            <div class="row mb-3">
+                @Html.LabelFor(x => x.Client.Email)
+                @Html.TextBoxFor(x => x.Client.Email,
+                new { @class = "form-control mt-3" })
+                @Html.ValidationMessageFor(x => x.Client.Email)
             </div>
             <button class="btn btn-primary btn-lg mb-5"
                     type="submit">
