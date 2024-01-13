@@ -52,5 +52,19 @@ namespace InvoiceManager.Controllers
                 UserId = userId,
             };
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Client(Client client)
+        {
+            var userId = User.Identity.GetUserId();
+            client.UserId = userId;
+            if(!ModelState.IsValid)
+            {
+                var vm = PrepareClientVm(client);
+                return View("Invoice", vm);
+            }
+
+            return View(client);
+        }
     }
 }
