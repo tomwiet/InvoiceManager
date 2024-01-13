@@ -63,8 +63,22 @@ namespace InvoiceManager.Controllers
                 var vm = PrepareClientVm(client);
                 return View("Invoice", vm);
             }
+            if (client.Id == 0)
+            {
+                var clientId = _clientRepository.Add(client);
+                return RedirectToAction("Invoice","Home", new { ClientId = clientId});
+            }
 
-            return View(client);
+            else
+            {
+                _clientRepository.Update(client);
+                var clientId = 0;
+                return RedirectToAction("Invoice", "Home", new {ClientId = clientId });
+
+            }
+            
+            
+            
         }
     }
 }

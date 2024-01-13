@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace InvoiceManager.Controllers
 {
@@ -24,12 +25,13 @@ namespace InvoiceManager.Controllers
 
             return View(invoices);
         }
-        public ActionResult Invoice(int id=0) 
+        public ActionResult Invoice(int id=0,int ClientId = 0) 
         {
             var userId = User.Identity.GetUserId();
             var invoice = (id==0) ?
                 GetNewInvoice(userId) :
                 _invoiceRepository.GetInvoice(id,userId);
+            
             var vm = PrepareInvoiceVm(invoice, userId);
             return View(vm);
         }
@@ -42,7 +44,8 @@ namespace InvoiceManager.Controllers
                 Invoice = invoice,
                 Heading = invoice.Id == 0 ? "Dodawanie nowej faktury" : "Faktura",
                 Clients = _clientRepository.GetClients(userId),
-                MethodOfPayments = _invoiceRepository.GetMethodsOfPayment()
+                MethodOfPayments = _invoiceRepository.GetMethodsOfPayment(),
+                
 
 
             };

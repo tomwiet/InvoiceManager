@@ -26,5 +26,19 @@ namespace InvoiceManager.Models.Repositories
             }
         }
 
+        public int Add(Client client)
+        {
+            using(var context = new ApplicationDbContext())
+            {
+                context.Clients.Add(client);
+                context.SaveChanges();
+                return client.Id;
+            }
+        }
+
+        internal void Update(Client client)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -6,7 +6,7 @@
 <h1 class="mb-3">@Model.Heading</h1>
 <div class="row">
     <div class="col">
-        @using (Html.BeginForm("AddEditClient", "Home"))
+        @using (Html.BeginForm("Client", "Client"))
         {
             @Html.AntiForgeryToken();
             @Html.ValidationSummary();
