@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using System.Web;
 
 namespace InvoiceManager.Models.Repositories
@@ -12,7 +13,11 @@ namespace InvoiceManager.Models.Repositories
         {
             using(var context = new ApplicationDbContext())
             {
-                return context.Clients.Where(x=>x.UserId == userId).ToList();
+                return context.Clients
+                    .Include(x => x.Address)
+                    .Where(x=>x.UserId == userId)
+                    .ToList();
+                    
             }
         }
 
@@ -39,6 +44,17 @@ namespace InvoiceManager.Models.Repositories
         internal void Update(Client client)
         {
             throw new NotImplementedException();
+        }
+
+        internal void Delete(int id, string userId)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var clientToDelete = context.Clients
+                    .Single(x => x.Id == id && x.UserId == userId);
+                context.Clients.Remove(clientToDelete);
+                context.SaveChanges();
+            }
         }
     }
 }

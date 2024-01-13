@@ -19,9 +19,13 @@ namespace InvoiceManager.Controllers
         // GET: Client
         public ActionResult Index()
         {
-            return View();
+            var userId = User.Identity.GetUserId();
+
+            var client = _clientRepository.GetClients(userId);
+
+            return View(client);
         }
-        public ActionResult EditClient(int id = 0)
+        public ActionResult Client(int id = 0)
         {
             var userId = User.Identity.GetUserId();
             var client = id == 0 ?
@@ -64,21 +68,29 @@ namespace InvoiceManager.Controllers
                 return View("Invoice", vm);
             }
             if (client.Id == 0)
-            {
-                var clientId = _clientRepository.Add(client);
-                return RedirectToAction("Invoice","Home", new { ClientId = clientId});
-            }
-
+             _clientRepository.Add(client);
             else
+                 _clientRepository.Update(client);
+                
+            return RedirectToAction("Invoice", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            try
             {
-                _clientRepository.Update(client);
-                var clientId = 0;
-                return RedirectToAction("Invoice", "Home", new {ClientId = clientId });
+                var userId = User.Identity.GetUserId();
+                _clientRepository.Delete(id, userId);
 
             }
-            
-            
-            
+            catch (Exception exeption)
+            {
+                //logowanie błędu do pliku
+                return Json(new { Success = false, Message = exeption.Message });
+            }
+
+            return Json(new { Success = true });
         }
     }
 }
