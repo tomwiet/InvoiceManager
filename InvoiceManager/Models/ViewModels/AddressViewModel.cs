@@ -11,7 +11,7 @@ namespace InvoiceManager.Models.ViewModels
         public AddressViewModel(Address address)
         {
             Address = address;
-            ConcatAddressesRow = $"{address.City}, {address.Street}, {address.Number}";
+            ConcatAddressesRow = $"{address.PostalCode} {address.City} , {address.Street} {address.Number}";
         }
         public Address Address { get; set; }
         public string ConcatAddressesRow { get; set; }
