@@ -39,14 +39,13 @@ namespace InvoiceManager.Controllers
         private EditInvoiceViewModel PrepareInvoiceVm(Invoice invoice, 
             string userId)
         {
+            
             return new EditInvoiceViewModel
             {
                 Invoice = invoice,
                 Heading = invoice.Id == 0 ? "Dodawanie nowej faktury" : "Faktura",
                 Clients = _clientRepository.GetClients(userId),
                 MethodOfPayments = _invoiceRepository.GetMethodsOfPayment(),
-                
-
 
             };
         }

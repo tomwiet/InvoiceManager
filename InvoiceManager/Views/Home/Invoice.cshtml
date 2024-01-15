@@ -50,28 +50,19 @@
             </div>
             <div class="row">
                 @Html.LabelFor(x => x.Invoice.ClientId)
-                <div class="row mb-3">
-                    
-                    <div class="col-lg-10">
+                
                         @Html.DropDownListFor(x => x.Invoice.ClientId,
                         new SelectList(Model.Clients, "Id", "Name"),
                         "--Wybierz klienta--",
-
                         new { @class = "form-control mt-3" })
-                    </div>
-                    <div class="col-lg-1 mt-3">
-                        <button class="btn btn-sm btn-outline-dark"
-                                onclick='window.location.href =
-                                    "@Url.Action("Client", "Client", 
-                                                  new {fromInvoice=1})"'
-                                type="button">
-                        +
-                        </button>
-
-                    </div>
-                    
-                    
-                </div>    
+                    @if(Model.Invoice.Id == 0)
+                     {
+                        <a class="text-end" href="@Url.Action("Client", "Client",
+                                                  new {fromInvoice=1})">
+                            Dodaj klienta
+                        </a>
+                     }
+              
                 @Html.ValidationMessageFor(x => x.Invoice.ClientId)
                 
             </div>
@@ -204,7 +195,6 @@
                 todayHighlight: true,
                 forceParse: false
             });
-
         });
 
     </script>
