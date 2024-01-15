@@ -76,12 +76,13 @@ namespace InvoiceManager.Controllers
 
         private EditInvoicePositionViewModel PrepareInvoicePositionVm(InvoicePosition invoicePosition)
         {
+            var userId = User.Identity.GetUserId();
             return new EditInvoicePositionViewModel 
             { 
                 InvoicePosition = invoicePosition,
                 Heading= invoicePosition.Id==0 ? 
                 "Dodawanie pozycji faktury" : "Pozycja faktury",
-                Products = _productRepository.GetProducts()
+                Products = _productRepository.GetProducts(userId)
             };
         }
 
@@ -118,7 +119,7 @@ namespace InvoiceManager.Controllers
         {
             var userId = User.Identity.GetUserId();
 
-            var product = _productRepository.GetProduct(invoicePosition.ProductId);
+            var product = _productRepository.GetProduct(invoicePosition.ProductId,userId);
             if (!ModelState.IsValid)
             {
                 var vm = PrepareInvoicePositionVm(invoicePosition);
