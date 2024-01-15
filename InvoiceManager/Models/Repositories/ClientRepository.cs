@@ -43,7 +43,17 @@ namespace InvoiceManager.Models.Repositories
 
         public void Update(Client client)
         {
-            throw new NotImplementedException();
+            using (var context = new ApplicationDbContext())
+            {
+                var clientToUpdate = context.Clients
+                    .Single(x => x.Id == client.Id && x.UserId == client.UserId);
+                clientToUpdate.Name = client.Name;
+                clientToUpdate.Address = client.Address;
+                clientToUpdate.Email = client.Email;
+
+                context.SaveChanges();
+            }
+
         }
 
         public void Delete(int id, string userId)
