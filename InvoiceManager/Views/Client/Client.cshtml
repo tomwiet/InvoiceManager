@@ -1,6 +1,6 @@
 ﻿@model InvoiceManager.Models.ViewModels.EditClientViewModel
 @{
-    ViewBag.Title = Model.Heading;
+    ViewBag.Title = Model.Heading; 
 }
 
 <h1 class="mb-3">@Model.Heading</h1>
@@ -19,6 +19,7 @@
                 </p>
             }
             @Html.HiddenFor(x => x.Client.UserId)
+            @Html.HiddenFor(x=>x.FromInvoice)
             <div class="row mb-3">
                 @Html.LabelFor(x => x.Client.Name)
                 @Html.TextBoxFor(x => x.Client.Name,
@@ -40,6 +41,7 @@
                 new { @class = "form-control mt-3" })
                 @Html.ValidationMessageFor(x => x.Client.Email)
             </div>
+
             <button class="btn btn-primary btn-lg mb-5"
                     type="submit">
                 Zapisz

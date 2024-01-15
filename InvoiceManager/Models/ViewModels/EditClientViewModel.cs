@@ -10,6 +10,7 @@ namespace InvoiceManager.Models.ViewModels
     {
         public Client Client { get; set; }
         public string Heading { get; set; }
+        public int FromInvoice {  get; set; }
         public List<AddressViewModel> AddressList { get; set; }
 
     }

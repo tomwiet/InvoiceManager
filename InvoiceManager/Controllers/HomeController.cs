@@ -25,11 +25,11 @@ namespace InvoiceManager.Controllers
 
             return View(invoices);
         }
-        public ActionResult Invoice(int id=0,int ClientId = 0) 
+        public ActionResult Invoice(int id=0,int clientId = 0) 
         {
             var userId = User.Identity.GetUserId();
             var invoice = (id==0) ?
-                GetNewInvoice(userId) :
+                GetNewInvoice(userId,clientId) :
                 _invoiceRepository.GetInvoice(id,userId);
             
             var vm = PrepareInvoiceVm(invoice, userId);
@@ -51,13 +51,14 @@ namespace InvoiceManager.Controllers
             };
         }
 
-        private Invoice GetNewInvoice(string userId)
+        private Invoice GetNewInvoice(string userId,int clientId)
         {
             return new Invoice
             {
                 UserId = userId,
                 CreatedDate = DateTime.Now,
-                PaymentDate = DateTime.Now.AddDays(7)
+                PaymentDate = DateTime.Now.AddDays(7),
+                ClientId = clientId
 
             };
         }

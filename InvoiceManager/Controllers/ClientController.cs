@@ -25,18 +25,18 @@ namespace InvoiceManager.Controllers
 
             return View(client);
         }
-        public ActionResult Client(int id = 0)
+        public ActionResult Client(int id = 0,int fromInvoice = 0)
         {
             var userId = User.Identity.GetUserId();
             var client = id == 0 ?
                 GetNewClient(userId) :
                 _clientRepository.GetClient(id,userId);
-            var vm = PrepareClientVm(client);
+            var vm = PrepareClientVm(client,fromInvoice);
             
             return View(vm);
         }
 
-        private EditClientViewModel PrepareClientVm(Client client)
+        private EditClientViewModel PrepareClientVm(Client client,int fromInvoice = 0)
         {
             return new EditClientViewModel
             {
@@ -44,8 +44,8 @@ namespace InvoiceManager.Controllers
                 Heading = client.Id == 0 ?
                 "Dodawanie nowego klienta" :
                 "Edycja danych klienta",
-                AddressList = _addressRepository.GetAdressesVm()
-
+                AddressList = _addressRepository.GetAdressesVm(),
+                FromInvoice = fromInvoice
             };
         }
 
@@ -58,22 +58,27 @@ namespace InvoiceManager.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Client(Client client)
+        public ActionResult Client(Client client,int fromInvoice = 0)
         {
             var userId = User.Identity.GetUserId();
             client.UserId = userId;
             if(!ModelState.IsValid)
             {
-                var vm = PrepareClientVm(client);
+                var vm = PrepareClientVm(client,fromInvoice);
                 return View("Invoice", vm);
             }
             if (client.Id == 0)
-             _clientRepository.Add(client);
+                _clientRepository.Add(client);
             else
-                 _clientRepository.Update(client);
-                
-            return RedirectToAction("Invoice", "Home");
+                _clientRepository.Update(client);
+            
+            if(fromInvoice == 0)
+                 return RedirectToAction("Index","Client");
+
+            return RedirectToAction("Invoice", "Home", new { clientId = client.Id });
         }
+       
+
 
         [HttpPost]
         public ActionResult Delete(int id)

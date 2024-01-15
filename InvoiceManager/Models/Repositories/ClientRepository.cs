@@ -41,12 +41,12 @@ namespace InvoiceManager.Models.Repositories
             }
         }
 
-        internal void Update(Client client)
+        public void Update(Client client)
         {
             throw new NotImplementedException();
         }
 
-        internal void Delete(int id, string userId)
+        public void Delete(int id, string userId)
         {
             using (var context = new ApplicationDbContext())
             {
